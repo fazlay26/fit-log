@@ -3,6 +3,10 @@ import { exerciseContext } from '@/context/ExerciceProvider';
 import Image from 'next/image';
 import React, { useContext, useState } from 'react';
 import { oswald, inter } from '@/fonts/fonts';
+import { MdOutlineWatchLater } from 'react-icons/md';
+import { FaFire } from 'react-icons/fa';
+import { CiStar } from 'react-icons/ci';
+import Link from 'next/link';
 
 const MyPlanPlage = () => {
     const {planExercise,saved,setPlanExercise,setSaved} = useContext(exerciseContext);
@@ -138,16 +142,18 @@ const totalCaloriesSaved = saved.reduce(
                                     {exercise.equipment}
                                 </p>
                                 <div className="flex items-center flex-wrap gap-3 text-xs text-gray-400 mt-2">
-                                    <span>⏱ {exercise.duration} min</span>
-                                    <span>🔥 {exercise.caloriesBurned} kcal</span>
-                                    <span>★ {exercise.rating}</span>
+                                    <span className='inline-flex items-center gap-1'><MdOutlineWatchLater className='text-[#c8ff00]' /> {exercise.duration} min</span>
+                                    <span className='inline-flex items-center gap-1'><FaFire className='text-[#c8ff00]'  /> {exercise.caloriesBurned} kcal</span>
+                                    <span className='inline-flex items-center gap-1'><CiStar className='text-[#c8ff00]' />{exercise.rating}</span>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                               <Link href={`/${exercise.id}`}>
                                 <button className="flex-1 sm:flex-none border border-white/20 hover:border-white/40 text-white text-xs font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap">
                                     View Details
                                 </button>
+                               </Link>
                                 <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">
                                     ✓ Mark as Done
                                 </button>
@@ -203,16 +209,18 @@ const totalCaloriesSaved = saved.reduce(
                                     {save.equipment}
                                 </p>
                                 <div className="flex items-center flex-wrap gap-3 text-xs text-gray-400 mt-2">
-                                    <span>⏱ {save.duration} min</span>
-                                    <span>🔥 {save.caloriesBurned} kcal</span>
-                                    <span>★ {save.rating}</span>
+                                    <span className='inline-flex items-center gap-1'> <MdOutlineWatchLater className='text-[#c8ff00]' /> {save.duration} min</span>
+                                    <span className='inline-flex items-center gap-1'> <FaFire className='text-[#c8ff00]'  /> {save.caloriesBurned} kcal</span>
+                                    <span className='inline-flex items-center gap-1'><CiStar className='text-[#c8ff00]' /> {save.rating}</span>
                                 </div>
                             </div>
 
                             <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                                <Link href={`/${save.id}`}>
                                 <button className="flex-1 sm:flex-none border border-white/20 hover:border-white/40 text-white text-xs font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap">
                                     View Details
                                 </button>
+                                </Link>
                                 <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">
                                     ✓ Mark as Done
                                 </button>
