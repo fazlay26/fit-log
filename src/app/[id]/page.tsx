@@ -4,6 +4,8 @@ import { oswald, inter } from '@/fonts/fonts';
 import { iLibary } from '@/types/LibaryType';
 import { IoCalendarNumber } from 'react-icons/io5';
 import { FaRegSave } from 'react-icons/fa';
+import AddTodayPlanButton from '@/components/AddTodayPlanButton';
+import SavedButton from '@/components/SavedButton';
 
 interface ParamsProps {
     params: Promise<{ id: string }>;
@@ -112,15 +114,9 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
 
                             {/* Buttons */}
                             <div className="flex flex-col sm:flex-row gap-3">
-                                <button className="flex items-center justify-center gap-2 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-sm font-semibold uppercase tracking-wider px-6 py-3 rounded-md">
-                                    <IoCalendarNumber />
-                                    Add to today's plan
-                                </button>
+                                <AddTodayPlanButton data={data}></AddTodayPlanButton>
 
-                                <button className="flex items-center justify-center gap-2 bg-transparent border border-white/20 hover:border-white/40 transition-colors text-white text-sm font-semibold uppercase tracking-wider px-6 py-3 rounded-md">
-                                    <FaRegSave />
-                                    Save for later
-                                </button>
+                                <SavedButton data={data}></SavedButton>
                             </div>
 
                         </div>
