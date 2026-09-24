@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import { oswald, inter } from '@/fonts/fonts';
 import { iLibary } from '@/types/LibaryType';
+import Link from 'next/link';
 
 interface LibaryDataProps {
     libaryData: iLibary
@@ -9,7 +10,7 @@ interface LibaryDataProps {
 
 const LibaryCard = ({ libaryData }: LibaryDataProps) => {
     return (
-        <div
+        <Link href={`/${libaryData.id}`}
             key={libaryData.id}
             className="bg-[#111111] border border-white/10 rounded-2xl overflow-hidden hover:border-[#c8ff00]/40 transition-colors group"
         >
@@ -75,7 +76,7 @@ const LibaryCard = ({ libaryData }: LibaryDataProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
