@@ -57,20 +57,24 @@ const Navbar = () => {
                 <div className="navbar-end">
                     <div className="flex items-center gap-3 sm:gap-6 text-sm">
                         {/* Plan */}
+                       <Link href={'/my-plan'}>
                         <div className="flex items-center gap-2 text-white cursor-pointer">
                             <span>Plan</span>
                             <span className="text-black text-xs px-2 py-1 border border-[#c8ff00] rounded-full bg-[#c8ff00]">
                                 0
                             </span>
                         </div>
+                       </Link>
 
 
+                        <Link href={'/my-plan'}>
                         <div className="flex items-center gap-2 text-gray-400 cursor-pointer">
                             <span>Saved</span>
                             <span className="text-white text-xs border border-[#2D313B] rounded-full px-2 py-1">
                                 0
                             </span>
                         </div>
+                        </Link>
                     </div>
                 </div>
 
