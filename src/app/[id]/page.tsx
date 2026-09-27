@@ -6,6 +6,7 @@ import { IoCalendarNumber } from 'react-icons/io5';
 import { FaRegSave } from 'react-icons/fa';
 import AddTodayPlanButton from '@/components/AddTodayPlanButton';
 import SavedButton from '@/components/SavedButton';
+import NotFound from '../NotFound';
 
 interface ParamsProps {
     params: Promise<{ id: string }>;
@@ -15,6 +16,9 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
     const { id } = await params;
 
     const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
+    if (!res.ok) {
+    return <NotFound></NotFound>;
+}
 
     const data: iLibary = await res.json();
 
@@ -66,14 +70,16 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
 
                             {/* Muscle Group Tags */}
                             <div className="flex flex-wrap gap-2 mb-6">
-                                {data.muscleGroups.map((group, idx) => (
+                                {
+                                    !data ? <p>data not found</p> : data?.muscleGroups?.map((group, idx) => (
                                     <span
                                         key={idx}
                                         className="bg-[#c8ff00] text-black text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full"
                                     >
                                         {group}
                                     </span>
-                                ))}
+                                ))
+                                }
                             </div>
 
                             {/* Specs Table */}

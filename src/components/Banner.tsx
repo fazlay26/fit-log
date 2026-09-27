@@ -2,6 +2,8 @@ import React from 'react';
 import banner from '@/assets/banner.png';
 import { oswald, inter } from '@/fonts/fonts';
 import Image from 'next/image';
+import { FaArrowRight } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Banner = () => {
     return (
@@ -29,9 +31,9 @@ const Banner = () => {
                             </p>
 
                            
-                            <button className="bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs sm:text-sm font-semibold uppercase tracking-wider px-6 py-3 rounded-md">
-                                Browse Workouts
-                            </button>
+                            <a href="#workouts"><button className="bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs sm:text-sm font-semibold uppercase tracking-wider px-6 py-3 rounded-md">
+                                <span className='flex items-center gap-4'><FaArrowRight />Browse Workouts</span>
+                            </button></a>
                         </div>
 
                      

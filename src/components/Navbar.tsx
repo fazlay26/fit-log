@@ -5,6 +5,8 @@ import { oswald, inter } from '@/fonts/fonts';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
+import { exerciseContext } from '@/context/ExerciceProvider';
 
 const Navbar = () => {
      const pathname = usePathname()
@@ -12,6 +14,8 @@ const Navbar = () => {
         <li><Link href={'/'} className={`${pathname === '/' ? 'text-[#c8ff00] font-medium':"text-gray-300"}`}>Workouts</Link></li>
         <li><Link href={'/my-plan'} className={`${pathname === '/my-plan' ? 'text-[#c8ff00] font-medium':"text-gray-300"}`}>My Plan</Link></li>
     </>
+
+    const { planExercise, saved } = useContext(exerciseContext);
    
     return (
         <nav className={`${inter.className} w-full bg-[#0a0a0a] border-b border-white/10`}>
@@ -61,7 +65,7 @@ const Navbar = () => {
                         <div className="flex items-center gap-2 text-white cursor-pointer">
                             <span>Plan</span>
                             <span className="text-black text-xs px-2 py-1 border border-[#c8ff00] rounded-full bg-[#c8ff00]">
-                                0
+                                {planExercise.length}
                             </span>
                         </div>
                        </Link>
@@ -71,7 +75,7 @@ const Navbar = () => {
                         <div className="flex items-center gap-2 text-gray-400 cursor-pointer">
                             <span>Saved</span>
                             <span className="text-white text-xs border border-[#2D313B] rounded-full px-2 py-1">
-                                0
+                                {saved.length}
                             </span>
                         </div>
                         </Link>

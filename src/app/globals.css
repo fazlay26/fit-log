@@ -18,3 +18,6 @@
 .toast-enter {
   animation: slide-down 0.5s both;
 }
+html {
+  scroll-behavior: smooth;
+}

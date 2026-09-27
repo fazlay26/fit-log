@@ -1,7 +1,8 @@
 import { iLibary } from '@/types/LibaryType';
 import { oswald, inter } from '@/fonts/fonts';
-import React from 'react';
+import React, { Suspense } from 'react';
 import LibaryCard from './LibaryCard';
+import LibarySkeleton from './LibarySkeleton';
 
 const getLibary = async (): Promise<iLibary[]> => {
     const res = await fetch('https://api.abcz.workers.dev/api/fitlog');
@@ -13,7 +14,7 @@ const Libary = async () => {
     const libaryDatas = await getLibary();
 
     return (
-        <section className={`${inter.className} w-full px-4 sm:px-6 py-8 sm:py-12`}>
+            <section className={`${inter.className} w-full px-4 sm:px-6 py-8 sm:py-12`}>
             <div className="max-w-7xl mx-auto">
 
               
@@ -27,14 +28,15 @@ const Libary = async () => {
                 </div>
 
                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                    {libaryDatas.map((libaryData: iLibary) => (
-                       <LibaryCard key={libaryData.id} libaryData={libaryData}></LibaryCard>
+                <div id="workouts" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                    {libaryDatas.map((libaryData: iLibary,index:number) => (
+                       <Suspense key={index} fallback={<LibarySkeleton />}><LibaryCard key={libaryData.id} libaryData={libaryData}></LibaryCard></Suspense>
                     ))}
                 </div>
 
             </div>
         </section>
+        
     );
 };
 
