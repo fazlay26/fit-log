@@ -8,11 +8,15 @@ import { FaFire } from 'react-icons/fa';
 import { CiStar } from 'react-icons/ci';
 import Link from 'next/link';
 import { cssTransition, toast } from 'react-toastify';
+import { spawn } from 'child_process';
 
 const MyPlanPlage = () => {
+    const [completedIds, setCompletedIds] = useState<number[]>([]);
+    const [sortBy, setSortBy] = useState<'duration' | 'calories' | 'rating'>('duration');
+    
     const { planExercise, saved, setPlanExercise, setSaved } = useContext(exerciseContext);
     const [activeTab, setActiveTab] = useState<'today' | 'saved'>('today');
-    console.log(activeTab);
+   
     const totalDuration = planExercise.reduce(
         (sum, PE) => sum + Number(PE.duration),
         0
@@ -30,9 +34,20 @@ const MyPlanPlage = () => {
         0
     );
     const SlideDown = cssTransition({
-  enter: 'toast-enter',
-  exit: 'Toastify__bounce-exit--top-right',
+        enter: 'toast-enter',
+        exit: 'Toastify__bounce-exit--top-right',
+    });
+    const sortedPlanExercise = [...planExercise].sort((a, b) => {
+    if (sortBy === 'duration') return b.duration - a.duration;
+    if (sortBy === 'calories') return b.caloriesBurned - a.caloriesBurned;
+    return b.rating - a.rating;
 });
+const sortedSaved = [...saved].sort((a, b) => {
+    if (sortBy === 'duration') return b.duration - b.duration;
+    if (sortBy === 'calories') return b.caloriesBurned - b.caloriesBurned;
+    return b.rating - b.rating;
+});
+
 
     return (
         <div className='w-full px-4 sm:px-6 py-6 sm:py-10'>
@@ -103,10 +118,10 @@ const MyPlanPlage = () => {
                         {/* Sort By (UI only) */}
                         <div className="hidden sm:flex items-center gap-3">
                             <span className="text-gray-500 text-sm">Sort By</span>
-                            <select className="bg-[#141414] border border-white/10 text-white text-sm rounded-lg px-3 py-1.5 outline-none">
-                                <option>Duration</option>
-                                <option>Calories</option>
-                                <option>Rating</option>
+                            <select value={sortBy} onChange={(e)=>setSortBy(e.target.value as 'duration' | 'calories' | 'rating')} className="bg-[#141414] border border-white/10 text-white text-sm rounded-lg px-3 py-1.5 outline-none">
+                                <option value="duration">Duration</option>
+                                <option value="calories">Calories</option>
+                                <option value="rating">Rating</option>
                             </select>
                         </div>
                     </div>
@@ -125,7 +140,7 @@ const MyPlanPlage = () => {
                                 </div>
                             ) : (
                                 <div className="space-y-4">
-                                    {planExercise.map((exercise, idnex) => (
+                                    {sortedPlanExercise.map((exercise, idnex) => (
                                         <div
                                             key={idnex}
                                             className="bg-[#0f0f0f] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-white/20 transition-colors"
@@ -160,8 +175,20 @@ const MyPlanPlage = () => {
                                                         View Details
                                                     </button>
                                                 </Link>
-                                                <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">
-                                                    ✓ Mark as Done
+                                                <button onClick={() => {
+                                                    if (completedIds.includes(exercise.id)) return;
+                                                    setCompletedIds([...completedIds, exercise.id]);
+                                                    toast.success('Marked as done!');
+                                                }} 
+                                               disabled={completedIds.includes(exercise.id)}
+                                                className= {`flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap ${
+        completedIds.includes(exercise.id)
+            ? 'bg-[#1f1f1f] text-gray-500 border border-white/10 cursor-not-allowed'
+            : 'bg-[#c8ff00] hover:bg-[#d4ff33] text-black'
+    }`}>
+                                                   {
+                                                    completedIds.includes(exercise.id) ? <span>Worktout Done</span> : <span>✓ Mark as Done</span>
+                                                   }
                                                 </button>
                                                 <button
                                                     onClick={() => {
@@ -178,7 +205,7 @@ const MyPlanPlage = () => {
                                                             transition: SlideDown,
                                                         });
                                                     }
-                                                        
+
                                                     }
                                                     aria-label="Remove"
                                                     className="text-gray-500 hover:text-white transition-colors p-1"
@@ -207,7 +234,7 @@ const MyPlanPlage = () => {
                                 </div>
                             ) : (
                                 <div className="space-y-4">
-                                    {saved.map((save) => (
+                                    {sortedSaved.map((save) => (
                                         <div
                                             key={save.id}
                                             className="bg-[#0f0f0f] border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-white/20 transition-colors"
@@ -242,8 +269,20 @@ const MyPlanPlage = () => {
                                                         View Details
                                                     </button>
                                                 </Link>
-                                                <button className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap">
-                                                    ✓ Mark as Done
+                                                <button onClick={() => {
+                                                    if (completedIds.includes(save.id)) return;
+                                                    setCompletedIds([...completedIds, save.id]);
+                                                    toast.success('Marked as done!');
+                                                }} 
+                                                disabled={completedIds.includes(save.id)}
+                                                 className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-[#c8ff00] hover:bg-[#d4ff33] transition-colors text-black text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap ${
+        completedIds.includes(save.id)
+            ? 'bg-[#1f1f1f] text-gray-500 border border-white/10 cursor-not-allowed'
+            : 'bg-[#c8ff00] hover:bg-[#d4ff33] text-black'
+    }`}>
+                                                    {
+                                                    completedIds.includes(save.id) ? <span>Worktout Done</span> : <span>✓ Mark as Done</span>
+                                                   }
                                                 </button>
                                                 <button
                                                     onClick={() => {
