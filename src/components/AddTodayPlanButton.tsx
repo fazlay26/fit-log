@@ -4,7 +4,7 @@ import { cssTransition } from 'react-toastify';
 import { iLibary } from '@/types/LibaryType';
 import { useContext } from 'react';
 import { IoCalendarNumber } from 'react-icons/io5';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 interface AddTodayPlanButtonProps {
     data: iLibary

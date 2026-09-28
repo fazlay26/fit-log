@@ -1,9 +1,6 @@
-import React from 'react';
 import Image from 'next/image';
 import { oswald, inter } from '@/fonts/fonts';
 import { iLibary } from '@/types/LibaryType';
-import { IoCalendarNumber } from 'react-icons/io5';
-import { FaRegSave } from 'react-icons/fa';
 import AddTodayPlanButton from '@/components/AddTodayPlanButton';
 import SavedButton from '@/components/SavedButton';
 import NotFound from '../NotFound';
@@ -22,7 +19,7 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
 
     const data: iLibary = await res.json();
 
-    // টেবিলের জন্য ডেটা অ্যারে
+    
     const specs = [
         { label: 'Equipment', value: data.equipment },
         { label: 'Difficulty', value: data.difficulty },
@@ -37,11 +34,11 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
         <section className={`${inter.className} w-full px-4 sm:px-6 py-8 sm:py-12`}>
             <div className="max-w-7xl mx-auto">
 
-                {/* ---------- Main Card ---------- */}
+                
                 <div className="bg-[#0f0f0f] border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
 
-                        {/* ---------- Left: Image ---------- */}
+                        
                         <div className="w-full">
                             <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[#1a1a1a]">
                                 <Image
@@ -55,20 +52,20 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
                             </div>
                         </div>
 
-                        {/* ---------- Right: Details ---------- */}
+                       
                         <div className="w-full">
 
-                            {/* Title */}
+                            
                             <h1 className={`${oswald.className} text-white text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-tight leading-tight`}>
                                 {data.name}
                             </h1>
 
-                            {/* Description */}
+                           
                             <p className="text-gray-400 text-sm sm:text-base leading-relaxed mt-3 mb-5">
                                 {data.description}
                             </p>
 
-                            {/* Muscle Group Tags */}
+                            
                             <div className="flex flex-wrap gap-2 mb-6">
                                 {
                                     !data ? <p>data not found</p> : data?.muscleGroups?.map((group, idx) => (
@@ -82,7 +79,7 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
                                 }
                             </div>
 
-                            {/* Specs Table */}
+                           
                             <div className="bg-[#141414] border border-white/10 rounded-xl overflow-hidden mb-6">
                                 {specs.map((spec, idx) => (
                                     <div
@@ -101,7 +98,7 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
                                 ))}
                             </div>
 
-                            {/* Instructions */}
+                            
                             <div className="mb-8">
                                 <h3 className={`${oswald.className} text-white text-lg font-bold uppercase tracking-wider mb-3`}>
                                     Instructions
@@ -118,7 +115,7 @@ const LibaryDetailPage = async ({ params }: ParamsProps) => {
                                 </ol>
                             </div>
 
-                            {/* Buttons */}
+                           
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <AddTodayPlanButton data={data}></AddTodayPlanButton>
 
